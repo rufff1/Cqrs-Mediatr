@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:Presentation.Controllers.CategoryController.CreateAsync(Busines.Cqrs.Commands.CreateCategoryCommand)">
+            <summary>
+            category yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.UpdateAsync(Busines.Cqrs.Commands.UpdateCategoryCommand)">
+            <summary>
+            category redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.DeleteAsync(Busines.Cqrs.Commands.DeleteCategoryCommand)">
+            <summary>
+             category silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.GetByIdAsync(System.Int32)">
+            <summary>
+             category id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.CategoryController.GetAllStudentAsync">
+            <summary>
+            category siyahısını götürmək üçün
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.CreateAsync(Busines.Cqrs.Commands.CreateProductCommand)">
+            <summary>
+            product yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.UpdateAsync(Busines.Cqrs.Commands.UpdateProductCommand)">
+            <summary>
+            Product redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.DeleteAsync(Busines.Cqrs.Commands.DeleteProductCommand)">
+            <summary>
+             Product silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.ProductController.GetByIdAsync(System.Int32)">
+            <summary>
+             Product id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+    </members>
+</doc>
