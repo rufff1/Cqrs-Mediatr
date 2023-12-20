@@ -48,12 +48,9 @@ namespace Bussines.Cqrs.Handlers
             if ((await _context.Categories.AnyAsync(x=> x.Name.ToLower().Trim() == request.Name.ToLower().Trim())))
             { throw new ValidationException("Bu adla category var"); }
 
-            //await _categoryRepository.CreateAsync(category);
 
-           // await _unitOfWork.CommitAsync(cancellationToken);
-
-            await _context.AddAsync(category, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _categoryRepository.CreateAsync(category, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
                   
             var map = _mapper.Map<CategoryCreateDTO>(category);
 

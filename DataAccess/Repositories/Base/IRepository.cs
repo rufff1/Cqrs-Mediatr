@@ -11,7 +11,7 @@ namespace DataAccess.Repositories.Base
     {
         Task<List<T>> GetAllAsync();
         Task<T> GetAsync(int id);
-        Task CreateAsync(T entity);
+        Task CreateAsync(T entity, CancellationToken cancellationToken);
         void Update(T entity);
         void Delete(T entity);
     }

@@ -20,9 +20,9 @@ namespace DataAccess.Repositories.Base
             _table = _context.Set<T>();
         }
 
-        public async Task CreateAsync(T entity)
+        public async Task CreateAsync(T entity, CancellationToken cancellationToken)
         {
-             await _table.AddAsync(entity);
+             await _table.AddAsync(entity,cancellationToken);
         }
 
         public void Delete(T entity)

@@ -1,9 +1,11 @@
 ﻿using Busines.Cqrs.Commands;
 using Busines.Exceptions;
 using Bussines.DTOs.Common;
+using Common.Entities;
 using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
 using DataAccess.Repositories.Concrete;
+using DataAccess.UnitOfWork;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,13 @@ namespace Busines.Cqrs.Handlers
     {
         public readonly IProductRepository _productRepository;
         public readonly AppDbContext _context;
+        public readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductHandler(AppDbContext context, IProductRepository productRepository)
+        public DeleteProductHandler(IUnitOfWork unitOfWork,AppDbContext context, IProductRepository productRepository)
         {
             _productRepository = productRepository;
             _context = context;
+            _unitOfWork= unitOfWork;
         }
 
         public async Task<Response> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
@@ -33,7 +37,9 @@ namespace Busines.Cqrs.Handlers
 
             _productRepository.Delete(result);
 
-            await _context.SaveChangesAsync(cancellationToken);
+    
+        
+            await _unitOfWork.CommitAsync(cancellationToken);
 
             return new Response
             {

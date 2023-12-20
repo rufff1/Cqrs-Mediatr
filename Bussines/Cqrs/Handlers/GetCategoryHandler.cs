@@ -19,13 +19,11 @@ namespace Bussines.Cqrs.Handlers
     public class GetCategoryHandler : IRequestHandler<GetCategoryByIdQuery,Response<CategoryDTO>>
     {
         public readonly ICategoryRepository _categoryRepository;
-        public readonly AppDbContext _context;
         public readonly IMapper _mapper;
 
-        public GetCategoryHandler(IMapper mapper,AppDbContext context, ICategoryRepository categoryRepository)
+        public GetCategoryHandler(IMapper mapper, ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
-            _context = context;
             _mapper = mapper;
         }
 

@@ -65,8 +65,8 @@ namespace Busines.Cqrs.Handlers
              existProduct.CategoryId = request.CategoryId;
             existProduct.Name = request.Name;
             existProduct.Description = request.Description;
-              _productRepository.Update(existProduct);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _productRepository.CreateAsync(existProduct, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
 
             var map = _mapper.Map<ProductUpdateDTO>(model);
 

@@ -8,6 +8,7 @@ using Bussines.DTOs.Common;
 using Common.Entities;
 using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
+using DataAccess.Repositories.Concrete;
 using DataAccess.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -49,8 +50,8 @@ namespace Busines.Cqrs.Handlers
                throw new ValidationException("gelen category yalnisdir");
             }
 
-            await _context.AddAsync(product, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _productRepository.CreateAsync(product, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
 
             var map = _mapper.Map<ProductCreateDTO>(product);
 

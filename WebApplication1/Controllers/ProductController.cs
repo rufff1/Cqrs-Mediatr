@@ -95,7 +95,7 @@ namespace Presentation.Controllers
         /// <summary>
         /// Product siyahısını götürmək üçün
         /// </summary>
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<CategoryDTO>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<ProductDTO>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
         #endregion
         [HttpGet("allProduct")]

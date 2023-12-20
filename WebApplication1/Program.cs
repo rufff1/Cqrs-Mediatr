@@ -2,6 +2,8 @@ using AutoMapper;
 using Busines.Cqrs.Commands;
 using Busines.Cqrs.Handlers;
 using Busines.Cqrs.Queries;
+using Busines.DTOs.Blog.Request;
+using Busines.DTOs.Blog.Response;
 using Busines.DTOs.Product.Request;
 using Busines.DTOs.Product.Response;
 using Busines.MappingProfiles;
@@ -18,8 +20,11 @@ using DataAccess.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Presentation.Middlewares;
+using Serilog;
+using Serilog.Core;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,8 +46,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("Default"), x => x.MigrationsAssembly("DataAccess")));
 
+Logger log = new LoggerConfiguration()
+      .WriteTo.Seq("http://localhost:5341")
+      .Enrich.FromLogContext()
+      .MinimumLevel.Information()
+      .CreateLogger();
 
-
+builder.Host.UseSerilog(log);
 
 #region Handler config
 
@@ -54,14 +64,18 @@ builder.Services.AddTransient<IRequestHandler<GetCategoryByIdQuery, Response<Cat
 builder.Services.AddTransient<IRequestHandler<GetCategoryListQuery, Response<List<CategoryDTO>>>, GetCategorytListHandler>();
 
 //PRODUCT
-//builder.Services.AddTransient<CreateProductCommand>();
 builder.Services.AddTransient<IRequestHandler<CreateProductCommand, Response<ProductCreateDTO>>, CreateProductHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateProductCommand, Response<ProductUpdateDTO>>, UpdateProductHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteProductCommand, Response>, DeleteProductHandler>();
 builder.Services.AddTransient<IRequestHandler<GetProductByIdQuery, Response<ProductDTO>>, GetProductHandler>();
 builder.Services.AddTransient<IRequestHandler<GetProductListQuery, Response<List<ProductDTO>>>, GetProductListHandler>();
 
-
+//BLOG
+builder.Services.AddTransient<IRequestHandler<CreateBlogCommand, Response<BlogCreateDTO>>, CreateBlogHandler>();
+builder.Services.AddTransient<IRequestHandler<UpdateBlogCommand, Response<BlogUpdateDTO>>, UpdateBlogHandler>();
+builder.Services.AddTransient<IRequestHandler<DeleteBlogCommand, Response>, DeleteBlogHandler>();
+builder.Services.AddTransient<IRequestHandler<GetBlogByIdQuery, Response<BlogDTO>>, GetBlogHandler>();
+builder.Services.AddTransient<IRequestHandler<GetBlogListQuery, Response<List<BlogDTO>>>, GetBlogListHandler>();
 
 #endregion
 
@@ -69,6 +83,7 @@ builder.Services.AddTransient<IRequestHandler<GetProductListQuery, Response<List
 #region Repository config
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 #endregion
 
 
@@ -82,6 +97,7 @@ builder.Services.AddAutoMapper(x =>
 {
     x.AddProfile(new CategoryMappingProfile());
     x.AddProfile(new ProductMappingProfile());
+    x.AddProfile(new BlogMappingProfile());
 });
 var app = builder.Build();
 

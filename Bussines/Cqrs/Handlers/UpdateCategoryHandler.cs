@@ -25,12 +25,14 @@ namespace Bussines.Cqrs.Handlers
       
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateCategoryHandler(AppDbContext context, ICategoryRepository categoryRepository, IMapper mapper)
+        public UpdateCategoryHandler(IUnitOfWork unitOfWork,AppDbContext context, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
              _mapper = mapper;
             _context = context;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Response<CategoryUpdateDTO>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
@@ -62,8 +64,8 @@ namespace Bussines.Cqrs.Handlers
 
             category.ModifiedDate = DateTime.Now;
 
-            _categoryRepository.Update(category);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _categoryRepository.CreateAsync(category, cancellationToken);
+            await _unitOfWork.CommitAsync(cancellationToken);
 
             var map = _mapper.Map<CategoryUpdateDTO>(model);
 
