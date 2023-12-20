@@ -91,6 +91,21 @@ namespace Presentation.Controllers
 
 
 
+        #region Documentation
+        /// <summary>
+        /// Product siyahısını götürmək üçün
+        /// </summary>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<List<CategoryDTO>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(Response))]
+        #endregion
+        [HttpGet("allProduct")]
+        public async Task<Response<List<ProductDTO>>> GetAallASync()
+        {
+            return await _mediator.Send(new GetProductListQuery());
+        }
+
+
+
 
     }
 }

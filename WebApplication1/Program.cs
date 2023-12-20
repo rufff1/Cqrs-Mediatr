@@ -45,16 +45,22 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configur
 
 
 #region Handler config
+
+//CATEGORY
 builder.Services.AddTransient<IRequestHandler<CreateCategoryCommand, Response<CategoryCreateDTO>>, CreateCategoryHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateCategoryCommand, Response<CategoryUpdateDTO>>, UpdateCategoryHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteCategoryCommand, Response>, DeleteCategoryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetCategoryByIdQuery, Response<CategoryDTO>>, GetCategoryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetCategoryListQuery, Response<List<CategoryDTO>>>, GetCategorytListHandler>();
 
+//PRODUCT
+//builder.Services.AddTransient<CreateProductCommand>();
 builder.Services.AddTransient<IRequestHandler<CreateProductCommand, Response<ProductCreateDTO>>, CreateProductHandler>();
 builder.Services.AddTransient<IRequestHandler<UpdateProductCommand, Response<ProductUpdateDTO>>, UpdateProductHandler>();
 builder.Services.AddTransient<IRequestHandler<DeleteProductCommand, Response>, DeleteProductHandler>();
 builder.Services.AddTransient<IRequestHandler<GetProductByIdQuery, Response<ProductDTO>>, GetProductHandler>();
+builder.Services.AddTransient<IRequestHandler<GetProductListQuery, Response<List<ProductDTO>>>, GetProductListHandler>();
+
 
 
 #endregion

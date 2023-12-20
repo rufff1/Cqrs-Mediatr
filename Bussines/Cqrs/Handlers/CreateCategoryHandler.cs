@@ -11,6 +11,7 @@ using DataAccess.UnitOfWork;
 using MediatR;
 using DataAccess.Context;
 using Bussines.DTOs.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bussines.Cqrs.Handlers
 {
@@ -43,6 +44,9 @@ namespace Bussines.Cqrs.Handlers
             }
 
                 var category = _mapper.Map<Category>(request);
+
+            if ((await _context.Categories.AnyAsync(x=> x.Name.ToLower().Trim() == request.Name.ToLower().Trim())))
+            { throw new ValidationException("Bu adla category var"); }
 
             //await _categoryRepository.CreateAsync(category);
 

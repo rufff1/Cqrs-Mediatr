@@ -59,5 +59,10 @@
             </summary>
             <param name="id"></param>
         </member>
+        <member name="M:Presentation.Controllers.ProductController.GetAallASync">
+            <summary>
+            Product siyahısını götürmək üçün
+            </summary>
+        </member>
     </members>
 </doc>

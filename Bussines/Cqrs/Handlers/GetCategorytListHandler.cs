@@ -7,6 +7,7 @@ using Common.Entities;
 using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Bussines.Cqrs.Handlers
         }
         public async Task<Response<List<CategoryDTO>>> Handle(GetCategoryListQuery request, CancellationToken cancellationToken)
         {
-            var response = await _categoryRepository.GetAllAsync();
+            var response = await _context.Categories.Include(x=> x.Products).ToListAsync();
 
             if (response.Count <= 0 )
             {

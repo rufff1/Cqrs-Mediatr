@@ -56,7 +56,8 @@ namespace Bussines.Cqrs.Handlers
             var model = _mapper.Map<Category>(request);
 
 
-
+            if ((await _context.Categories.AnyAsync(x=> x.Name.ToLower().Trim() == model.Name.ToLower().Trim())))
+            { throw new ValidationException("bu adla category movcuddur"); }
 
 
             category.ModifiedDate = DateTime.Now;

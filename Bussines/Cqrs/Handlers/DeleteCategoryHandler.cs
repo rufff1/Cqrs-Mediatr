@@ -1,17 +1,10 @@
 ﻿using Busines.Cqrs.Commands;
 using Busines.Exceptions;
-using Business.DTOs.Category.Request;
 using Bussines.DTOs.Common;
 using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
-using DataAccess.Repositories.Base;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bussines.Cqrs.Handlers
 {
@@ -28,10 +21,16 @@ namespace Bussines.Cqrs.Handlers
 
         public async Task<Response> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            var result = await _categoryRepository.GetAsync(request.Id);
+            var result = await _context.Categories.Include(x=> x.Products).FirstOrDefaultAsync(x=> x.Id == request.Id);
             if (result == null)
                 throw new NotFoundException("category tapilmadi");
 
+
+          
+            if (result.Products.Count() > 0)
+            {
+                throw new ValidationException("bu category bagli datalar var");
+            }
 
              _categoryRepository.Delete(result);
 

@@ -18,7 +18,7 @@ namespace Busines.MappingProfiles
         {
 
             CreateMap<CategoryCreateDTO, Category>().ReverseMap();
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products)).ReverseMap();
             CreateMap<CategoryUpdateDTO, Category>().ReverseMap();
 
 

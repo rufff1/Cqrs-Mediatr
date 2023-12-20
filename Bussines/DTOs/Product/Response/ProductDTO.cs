@@ -14,6 +14,7 @@ namespace Busines.DTOs.Product.Response
         public int CategoryId { get; set; }
 
 
+     
         
     }
 }
