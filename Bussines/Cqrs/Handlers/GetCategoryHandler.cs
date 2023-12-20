@@ -8,6 +8,7 @@ using Common.Entities;
 using DataAccess.Context;
 using DataAccess.Repositories.Abstract;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +17,22 @@ using System.Threading.Tasks;
 
 namespace Bussines.Cqrs.Handlers
 {
-    public class GetCategoryHandler : IRequestHandler<GetCategoryByIdQuery,Response<CategoryDTO>>
+    public class GetCategoryHandler : IRequestHandler<GetCategoryByIdQuery, Response<CategoryDTO>>
     {
         public readonly ICategoryRepository _categoryRepository;
         public readonly IMapper _mapper;
+        public readonly AppDbContext _context;
 
-        public GetCategoryHandler(IMapper mapper, ICategoryRepository categoryRepository)
+        public GetCategoryHandler(AppDbContext context, IMapper mapper, ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
+            _context = context;
         }
 
         public async Task<Response<CategoryDTO>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var response = await _categoryRepository.GetAsync(request.Id);
+            var response = await _context.Categories.Include(x => x.Products).Include(x => x.Blogs).FirstOrDefaultAsync(x=> x.Id == request.Id);
 
             if (response == null)
             {

@@ -1,4 +1,5 @@
-﻿using Busines.DTOs.Product.Response;
+﻿using Busines.DTOs.Blog.Response;
+using Busines.DTOs.Product.Response;
 using Business.DTOs.Category.Response;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Business.DTOs.Category.Response
 
 
         public List<ProductDTO> Products { get; set; }
+        public List<BlogDTO> Blogs { get; set; }
 
     }
 }

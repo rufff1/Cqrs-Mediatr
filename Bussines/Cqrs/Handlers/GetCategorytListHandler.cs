@@ -30,7 +30,7 @@ namespace Bussines.Cqrs.Handlers
         }
         public async Task<Response<List<CategoryDTO>>> Handle(GetCategoryListQuery request, CancellationToken cancellationToken)
         {
-            var response = await _context.Categories.Include(x=> x.Products).ToListAsync();
+            var response = await _context.Categories.Include(x=> x.Products).Include(x=> x.Blogs).ToListAsync();
 
             if (response.Count <= 0 )
             {
