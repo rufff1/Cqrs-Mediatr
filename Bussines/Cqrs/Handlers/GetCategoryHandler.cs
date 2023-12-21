@@ -34,6 +34,8 @@ namespace Bussines.Cqrs.Handlers
         {
             var response = await _context.Categories.Include(x => x.Products).Include(x => x.Blogs).FirstOrDefaultAsync(x=> x.Id == request.Id);
 
+           
+
             if (response == null)
             {
                 

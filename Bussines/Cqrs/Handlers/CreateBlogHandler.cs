@@ -47,6 +47,33 @@ namespace Busines.Cqrs.Handlers
 
                 var entity = _mapper.Map<Blog>(request);
 
+
+            //List<BlogTag> blogTags = new List<BlogTag>();
+
+            //foreach (int tagId in entity.TagIds)
+            //{
+            //    if (entity.TagIds.Where(t=> t == tagId).Count()>1 )
+            //    {
+            //        throw new ValidationException("bit tagdan yalniz bir defe secile biler");
+            //    }
+
+            //    if (!await _context.Tags.AnyAsync(t=> t.Id == tagId))
+            //    {
+            //        throw new ValidationException("duzgun tag secin");
+            //    }
+
+            //    BlogTag blogTag = new BlogTag()
+            //    {
+            //        CreatedDate = DateTime.Now,
+
+            //        TagId = tagId,
+            //    };
+
+            //    blogTags.Add(blogTag);
+            //}
+                
+            //entity.BlogTags = blogTags;
+
                 if (!await _context.Categories.AnyAsync(x => x.Id == entity.CategoryId))
                 {
                     throw new ValidationException("gelen category yalnisdir");

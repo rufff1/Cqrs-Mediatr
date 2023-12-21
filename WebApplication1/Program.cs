@@ -6,6 +6,8 @@ using Busines.DTOs.Blog.Request;
 using Busines.DTOs.Blog.Response;
 using Busines.DTOs.Product.Request;
 using Busines.DTOs.Product.Response;
+using Busines.DTOs.Tag.Request;
+using Busines.DTOs.Tag.Response;
 using Busines.MappingProfiles;
 using Business.DTOs.Category.Request;
 using Business.DTOs.Category.Response;
@@ -39,6 +41,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -77,6 +81,20 @@ builder.Services.AddTransient<IRequestHandler<DeleteBlogCommand, Response>, Dele
 builder.Services.AddTransient<IRequestHandler<GetBlogByIdQuery, Response<BlogDTO>>, GetBlogHandler>();
 builder.Services.AddTransient<IRequestHandler<GetBlogListQuery, Response<List<BlogDTO>>>, GetBlogListHandler>();
 
+//TAG
+builder.Services.AddTransient<IRequestHandler<CreateTagCommand, Response<TagCreateDTO>>, CreateTagHandler>();
+builder.Services.AddTransient<IRequestHandler<UpdateTagCommand, Response<TagUpdateDTO>>, UpdateTagHandler>();
+builder.Services.AddTransient<IRequestHandler<DeleteTagCommand, Response>, DeleteTagHandler>();
+builder.Services.AddTransient<IRequestHandler<GetTagByIdQuery, Response<TagDTO>>, GetTagHandler>();
+builder.Services.AddTransient<IRequestHandler<GetAllTagQuery, Response<List<TagDTO>>>, GetTagListHandler>();
+
+
+
+
+
+
+
+
 #endregion
 
 
@@ -84,6 +102,7 @@ builder.Services.AddTransient<IRequestHandler<GetBlogListQuery, Response<List<Bl
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 #endregion
 
 
@@ -98,6 +117,7 @@ builder.Services.AddAutoMapper(x =>
     x.AddProfile(new CategoryMappingProfile());
     x.AddProfile(new ProductMappingProfile());
     x.AddProfile(new BlogMappingProfile());
+    x.AddProfile(new TagMappingProfile());
 });
 var app = builder.Build();
 

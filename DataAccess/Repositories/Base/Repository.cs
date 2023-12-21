@@ -3,6 +3,7 @@ using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace DataAccess.Repositories.Base
         public void Delete(T entity)
         {
             _table.Remove(entity);
+            
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -44,5 +46,6 @@ namespace DataAccess.Repositories.Base
         {
             _table.Update(entity);
         }
+
     }
 }

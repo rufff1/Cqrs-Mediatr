@@ -52,18 +52,19 @@ namespace Busines.Cqrs.Handlers
                 throw new ValidationException("duzgun category secin");
             }
 
-            var entity = _mapper.Map<Blog>(request);
+            var entity = _mapper.Map(request,existBlog);
 
-            existBlog.Name = request.Name;
-            existBlog.Description = request.Description;
-            existBlog.Author = request.Author;
-            existBlog.CategoryId = request.CategoryId;
+            existBlog.ModifiedDate = DateTime.Now;
 
-            var map = _mapper.Map<BlogUpdateDTO>(entity);
+
+            _blogRepository.Update(existBlog);
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+
 
             return new Response<BlogUpdateDTO>
             {
-                Data = map,
+                Data = _mapper.Map<BlogUpdateDTO>(entity),
                 Message = "update olundu"
             };
 

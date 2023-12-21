@@ -94,5 +94,35 @@
             Product siyahısını götürmək üçün
             </summary>
         </member>
+        <member name="M:Presentation.Controllers.TagController.CreateAsync(Busines.Cqrs.Commands.CreateTagCommand)">
+            <summary>
+            tag yaradılması üçün
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.UpdateAsync(Busines.Cqrs.Commands.UpdateTagCommand)">
+            <summary>
+            tag redaktə olunması üçün
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.DeleteAsync(Busines.Cqrs.Commands.DeleteTagCommand)">
+            <summary>
+             tag silinməsi
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.GetAsync(System.Int32)">
+            <summary>
+             tag id parametrinə görə götürülməsi üçün
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Presentation.Controllers.TagController.GetAllAsync">
+            <summary>
+            tag siyahısını götürmək üçün
+            </summary>
+        </member>
     </members>
 </doc>

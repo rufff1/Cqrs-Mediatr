@@ -60,12 +60,9 @@ namespace Busines.Cqrs.Handlers
 
 
 
-            var model = _mapper.Map<Product>(request);
+            var model = _mapper.Map(request,existProduct);
              existProduct.ModifiedDate = DateTime.Now;
-             existProduct.CategoryId = request.CategoryId;
-            existProduct.Name = request.Name;
-            existProduct.Description = request.Description;
-            await _productRepository.CreateAsync(existProduct, cancellationToken);
+             _productRepository.Update(existProduct);
             await _unitOfWork.CommitAsync(cancellationToken);
 
             var map = _mapper.Map<ProductUpdateDTO>(model);

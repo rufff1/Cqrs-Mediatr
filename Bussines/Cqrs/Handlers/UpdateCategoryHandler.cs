@@ -55,7 +55,7 @@ namespace Bussines.Cqrs.Handlers
             
 
 
-            var model = _mapper.Map<Category>(request);
+            var model = _mapper.Map(request,category);
 
 
             if ((await _context.Categories.AnyAsync(x=> x.Name.ToLower().Trim() == model.Name.ToLower().Trim())))
@@ -63,8 +63,7 @@ namespace Bussines.Cqrs.Handlers
 
 
             category.ModifiedDate = DateTime.Now;
-
-            await _categoryRepository.CreateAsync(category, cancellationToken);
+            _categoryRepository.Update(category);
             await _unitOfWork.CommitAsync(cancellationToken);
 
             var map = _mapper.Map<CategoryUpdateDTO>(model);
